@@ -8,16 +8,22 @@ body {
 
 /* Styling for headings */
 h1 {
-    color: #007BFF;
+    color: #035e1e;
     text-align: center;
     font-size: 2em;
+}
+
+h4 {
+    color: #088b04;
+    text-align: center;
+    font-size: 1em;
 }
 
 /* Styling for paragraphs */
 p {
     font-size: 1em;
     line-height: 1.6;
-    color: #fff000;
+    color: #05ee37;
 }
 
 /* Styling for links */
