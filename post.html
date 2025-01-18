@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <h1>Herramienta para calcular subredes</h1>
+    </head>
+    <body>
+        <p>Hace unos dias llegue tarde a la clase de redes, y para que salvara mi falta tenia que calcular unas subredes en el pizarron, pero por el poco tiempo que quedaba de clase no pude terminar y me equivoque muchas veces, por lo que pense "y si hago un script que automatice esto?" y eso fue lo que hice</p>
+        <p>Pase 3 dias programando este script pero logre terminarlo y me gustaria contarles el proceso que fue programar esto:</p>
+        <p>El primer dia me concentre en manejar la entrada, "que datos necesitaba?" principalmente la ip de la red a subnettear y la cantidad de subredes que necesitaba, pero tuve un problemita, la funcion input_raw() ya no funciona en python 3.10 asi que tuve que usar input() pero esta funcion guarda la entrada en una variable tipo string y yo necesitaba el input en tipo int yo se que existe la funcion int() que transforma la variable que le pases en un integer pero una ip lleva puntos</p>
+        <p>Primero intente hacer un array con el input pero solo guardaba cada digito por separado y para hacer el salto de subred iba a ser un problema, ademas para determinar la clase de la red necesitaba el primer octeto de la ip asi que opte por no complicarme y pedir cada uno de los octetos por separado, para la cantidad de subredes simplemente del input lo transforme a integer con int() y listo y con eso tenia todos los datos de entrada que necesitaba</p>
+        <p>Despues me concentre en sacar la mascara de subred en base a la cantidad de subredes, primero sacar la cantidad de bits para la red, sabemos que para saber cuantos bits hay que agregar usamos la formula 2^n = s donde n es la cantidad de bits a encender y s es un numero mayor o igual a la cantidad de subredes que se necesitan, entonces, para saber cuantos bits estaban encendidos hice esto:</p>
+        <p>primero determine el prefijo en base a la clase de la red comparando el primer octeto con un limite y de esa manera sabemos si es clase a,b o c y tambien sabemos que es un prefijo de \8 \16 o \24 y a estos prefijos solo le sumamos n y listo esa es la cantidad de bits encendidos, luego itere de 0 hasta la cantidad de bits encendidos y por cada iteracion agregar a un array un 1 y despues resto 32 - la cantidad de bits encendidos y tengo los bits del host, hago la misma iteracion pero esta vez agregando 0's y en cada 8 objetos en el array agrego un punto</p>
+        <p>Luego simplemente por cada octeto comprobe que bits estaban encendidos y fui sumandolos y de esa manera obtuve la mascara de subred en decimal y en bits</p>
+        <p>Lo siguiente fue hacer los saltos, que fue facil ya que es solo sumar 1 para la primera ip utilizable y restar 2 direcciones desde la siguiente subred para la ultima y restar 1 para el broadcas y de esa manera lo termine</p>
+        <p>Esto me ayudo mucho a comprender el funcionamiento de como dividir redes y aunque aqui lo cuento como si fuera facil, la verdad si me tomo un poco de tiempo pero fue divertido, ahora no se que proyecto hacer, por eso empece este blog</p>
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+    </body>
+</html>
