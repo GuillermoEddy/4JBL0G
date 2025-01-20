@@ -24,6 +24,7 @@ h4 {
 }
 
 h5 {
+    text-align: center;
     color: green;
 }
 /* Styling for paragraphs */
@@ -38,6 +39,7 @@ p {
 
 /* Styling for links */
 a {
+    text-align: center;
     color: green;
     line-height: 0;
     text-decoration: none;
