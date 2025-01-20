@@ -44,7 +44,7 @@ a:hover {
 
 
 /* Hover effect for buttons */
-button:hover {
+.btn:hover {
     background-color: #0056b3;
 }
 
