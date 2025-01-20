@@ -42,8 +42,8 @@ a:hover {
 
 /* Styling for buttons */
 button {
-    background-color: #007BFF;
-    color: white;
+    background-color: purple;
+    color: green;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
