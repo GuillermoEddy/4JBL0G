@@ -15,7 +15,7 @@ h1 {
 h2 {
     color: #088b04;
     text-align: center;
-    font-size: 1em;
+    font-size: 0.5em;
 }
 h4 {
     color: #088b04;
@@ -42,8 +42,9 @@ a:hover {
 
 /* Styling for buttons */
 button {
+    font-size: 1em;
     background-color: purple;
-    color: green;
+    color: black;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -53,4 +54,13 @@ button {
 /* Hover effect for buttons */
 button:hover {
     background-color: #0056b3;
+}
+
+.btn{
+    background-image:url("./icon.jpg");
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 70px;
+    background-size: 50px 50px;
+    background-position: center;
 }
