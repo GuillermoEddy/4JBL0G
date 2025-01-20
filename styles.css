@@ -50,6 +50,7 @@ button:hover {
 
 .icon{
     background-color: black;
+    border: none;
     background-image:url("./icon.jpg");
     background-repeat: no-repeat;
     height: 60px;
