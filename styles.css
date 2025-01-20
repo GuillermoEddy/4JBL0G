@@ -61,9 +61,9 @@ a:hover {
     border: none;
     background-image:url("./icon.jpg");
     background-repeat: no-repeat;
-    height: 60px;
-    width: 70px;
-    background-size: 50px 50px;
+    height: 90px;
+    width: 90px;
+    background-size: 90px 90px;
     background-position: center;
 }
 
