@@ -49,6 +49,7 @@ button:hover {
 }
 
 .icon{
+    background-color: black;
     background-image:url("./icon.jpg");
     background-repeat: no-repeat;
     height: 60px;
