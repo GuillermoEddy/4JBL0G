@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="shortcut icon" href="favicon.ico">
+        <!--Titulo del post (pestana)-->
+        <title>4JBL0G-Saltar contraseña de Windows</title>
+        <a href="./index.html">
+            <button class="icon"></button>
+        </a>
+        <!--Titulo del post-->
+        <h1>Saltar contraseña de Windows</h1>
+    </head>
+    <body>
+        <!--Separador-->
+        <h4>1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100</h4>
+        <!-- Texto del post-->
+        <p>En este post me gustaria contarles que hace poco vi en algun lado que no recuerdo, como alguien saltaba la contraseña de una maquina windows, asi que me puse a investigar y esto fue lo que encontre:</p>
+        <p>La particion de recuperacion del disco te permite abrir un cmd desde el que tienes acceso a todas las unidades incluyendo a la unidad C: esto significa que puedes editar archivos desde ahi o como minimo mover y copiar archivos entre otras cosas.</p>
+        <p>La explotacion consiste en que en la pantalla de inicio de sesion de windows en la parte inferior derecha hay 3 simbolos, entre ellos el de apagar y el de accesibilidad, para empezar la explotacion primero hay que dar click en el boton de apagar y luego en reiniciar mientras pulsas shift cuando vuelva a encender la maquina iniciara en la particion de recuperacion de Windows el siguiente paso es ir a Opciones Avanzadas > Simbolo del sistema, esto te abrira el cmd donde escribiras: copy utilman.exe utilmanbk.exe esto copiara el ejecutable de accesibilidad a un archivo que nos servira como copia de seguridad de accesibilidad</p>
+        <p>Despues hay que escribir: copy cmd.exe utilman.exe esto hara que el contenido de cmd.exe que sirve para abrir un simbolo del sistema se copie a el archivo utilman.exe que es el que se ejecuta cuando damos click en el icono de accesibilidad despues de esto cerramos y reiniciamos</p>
+        <p>"Al volver a iniciar daremos click en el icono de accesibilidad y se abrira un cmd donde primero listaremos los usuarios con el comando: net user y ahi buscaremos el usuario administrador, luego le cambiaremos la contraseña con: net user [Nombre del usuario] [Nueva contraseña] y ahora podras usar esa contraseña para iniciar sesion como administrador"</p>
+        <!--PoC-->
+        <h1>No tengo grabadora asi que no puedo hacerles una PoC</h1>
+    </body>
+</html>
