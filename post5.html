@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>4JBL0G - Ingeniería inversa de un Arcadyan VRV8019AW22</title>
+
+    <link rel="stylesheet"
+          href="styles.css">
+
+    <link rel="shortcut icon"
+          href="favicon.ico">
+
+</head>
+
+<body>
+
+    <header class="post-header">
+
+        <div class="logo-container">
+
+            <a href="./index.html">
+                <img src="icon.jpg"
+                     alt="Logo"
+                     class="logo">
+            </a>
+
+            <div>
+                <h2>4JBL0G</h2>
+                <p class="tagline">
+                    Cybersecurity & Programming
+                </p>
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="post-container">
+
+        <article class="post">
+
+            <h1>
+                Ingeniería inversa de un Arcadyan VRV8019AW22
+            </h1>
+
+            <div class="post-info">
+
+                <span>
+                    📅 19 de Agosto del 2025
+                </span>
+
+                <span>
+                    🏷️ HARDWARE
+                </span>
+
+                <span>
+                    🏷️ CIBERSEGURIDAD
+                </span>
+
+            </div>
+
+            <p class="binary">
+                1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100
+            </p>
+
+            <p>
+                Hace un tiempo conseguí un router Arcadyan VRV8019AW22 y
+                decidí utilizarlo como una oportunidad para experimentar con
+                ingeniería inversa de hardware. No tenía el esquema de la
+                placa, así que prácticamente todo el proceso consistió en
+                observar, medir, formular hipótesis y comprobar si esas
+                hipótesis tenían sentido.
+            </p>
+
+            <p>
+                La idea principal era investigar la placa desde cero,
+                encontrar alguna interfaz de depuración, observar el proceso
+                de arranque y averiguar hasta dónde podía llegar antes de
+                tener que modificar físicamente el hardware.
+            </p>
+
+            <h2>
+                Objetivo
+            </h2>
+
+            <p>
+                El objetivo inicial era localizar alguna interfaz de
+                depuración del router, conseguir acceso a una consola y
+                observar qué ocurría durante el arranque.
+            </p>
+
+            <p>
+                Si conseguía avanzar lo suficiente, quería identificar el
+                bootloader, analizar la memoria y eventualmente intentar
+                obtener un dump del firmware.
+            </p>
+
+            <p>
+                Como no tenía documentación de la placa, también quería
+                experimentar con las resistencias y puntos de configuración
+                cercanos al SoC para intentar descubrir si existía alguna
+                configuración física relacionada con el proceso de arranque.
+            </p>
+
+            <h2>
+                Desarrollo
+            </h2>
+
+            <h2>
+                Descubriendo la UART
+            </h2>
+
+            <p>
+                Lo primero que encontré fue un grupo de cuatro pads marcado
+                como J14. Uno de ellos tenía continuidad directa con GND,
+                mientras que los otros tres mostraban aproximadamente
+                3.3 V.
+            </p>
+
+            <p>
+                Esto me hizo pensar que probablemente estaba frente a una
+                interfaz UART, donde uno de los puntos podía ser alimentación
+                y otros dos correspondían a TX y RX.
+            </p>
+
+            <p>
+                Conecté un adaptador CP2102 y después de algunas pruebas
+                conseguí abrir la consola utilizando PuTTY. Además, los LED
+                de TX y RX mostraban actividad, así que finalmente había
+                encontrado una interfaz funcional.
+            </p>
+
+            <pre><code>
+J14
+
+1 ≈ 3.3 V
+2 ≈ 3.3 V
+3 ≈ 3.3 V
+4 = GND
+            </code></pre>
+
+            <h2>
+                El primer Bootlog
+            </h2>
+
+            <p>
+                Una vez conectada la UART pude observar información del
+                proceso de arranque del router.
+            </p>
+
+            <p>
+                Entre la información que apareció pude identificar la versión
+                de la ROM, la configuración utilizada, la memoria NAND, la
+                memoria DDR2 y finalmente U-Boot.
+            </p>
+
+            <pre><code>
+ROM VER: 1.1.4
+CFG 06
+NAND NAND Read OK
+
+DDR autotuning Rev 1.0
+DDR size from 0xa0000000 - 0xa7ffffff
+DDR check ok
+
+Start booting now
+
+UBOOT info
+DDR Type: WINBOND_DDR2
+MODEL: VRV8019
+Versión: 1.06.000.0012
+Release date: Thu Apr 7 16:07:19 2016
+
+[Cold Boot]
+
+System Start In Progress...
+            </code></pre>
+
+            <p>
+                El router continuaba funcionando normalmente y podía acceder
+                a su interfaz web mediante la dirección 192.168.1.254.
+                Sin embargo, la consola UART se quedaba detenida en
+                <strong>System Start In Progress...</strong>.
+            </p>
+
+            <p>
+                Intenté utilizar Enter y Ctrl+C para intentar interrumpir el
+                proceso de arranque, pero ninguna de las dos opciones me
+                proporcionó una consola interactiva de U-Boot.
+            </p>
+
+            <h2>
+                Buscando una configuración física
+            </h2>
+
+            <p>
+                Como no conseguía entrar directamente al bootloader, decidí
+                investigar la placa físicamente y buscar componentes que
+                pudieran estar relacionados con alguna configuración de
+                arranque.
+            </p>
+
+            <p>
+                Comencé revisando diferentes resistencias cercanas al SoC,
+                entre ellas R56, R142, R148 y finalmente R141.
+            </p>
+
+            <p>
+                R141 llamó especialmente mi atención porque tenía seis pads
+                organizados en tres posiciones. Para poder estudiar la red
+                con mayor facilidad decidí etiquetar los puntos como A, B, C,
+                D, E y F.
+            </p>
+
+            <p>
+                Durante las mediciones observé que B era el único punto con
+                continuidad directa a GND, mientras que A, C y E parecían
+                estar relacionados con el SoC.
+            </p>
+
+            <p>
+                A partir de esto planteé la hipótesis de que R141 podía formar
+                parte de una red de configuración de arranque, también
+                conocida como <em>strap</em>.
+            </p>
+
+            <h2>
+                Mediciones
+            </h2>
+
+            <p>
+                Para intentar entender cómo estaba conectada la resistencia
+                realicé varias mediciones sobre los diferentes puntos de la
+                red.
+            </p>
+
+            <pre><code>
+A/C/E → GND       ≈ 9.75 kΩ
+C → D             ≈ 10.77 kΩ
+C → J14-1         ≈ 19.9 kΩ
+F → J14-1         ≈ 7.96 kΩ
+D → GND           ≈ 1.33 kΩ
+            </code></pre>
+
+            <p>
+                Estas mediciones fueron realizadas en circuito, por lo que
+                no las consideré como el valor nominal definitivo de R141.
+                Más bien las utilicé como evidencia para intentar reconstruir
+                cómo estaba formada la red.
+            </p>
+
+            <h2>
+                El accidente con R141
+            </h2>
+
+            <p>
+                En algún momento tenía que ocurrir el clásico accidente de
+                trabajar con hardware viejo: mientras intentaba retirar R141,
+                la resistencia desapareció. Probablemente terminó adherida
+                al cautín.
+            </p>
+
+            <p>
+                Sin la resistencia el router dejó de arrancar, lo que fue una
+                pista bastante importante: el componente realmente tenía
+                relación con el comportamiento de arranque de la placa.
+            </p>
+
+            <p>
+                Ahora tenía un problema. Había perdido la resistencia original
+                y no conocía con certeza su valor.
+            </p>
+
+            <h2>
+                Reconstrucción temporal
+            </h2>
+
+            <p>
+                Para intentar recuperar la placa busqué resistencias en una
+                tarjeta de televisión CRT que tenía disponible para
+                desguace.
+            </p>
+
+            <p>
+                Encontré dos candidatas que, medidas fuera de circuito,
+                daban aproximadamente 4.2 kΩ cada una.
+            </p>
+
+            <p>
+                Al colocarlas en serie obtuve aproximadamente 8.6 kΩ.
+            </p>
+
+            <pre><code>
+C ──[ 4.2 kΩ ]──[ 4.2 kΩ ]── D
+
+Total medido ≈ 8.6 kΩ
+            </code></pre>
+
+            <p>
+                Instalé esta combinación entre C y D y, para mi sorpresa,
+                el router volvió a arrancar.
+            </p>
+
+            <p>
+                Además, continuaba mostrando CFG 06 durante el arranque.
+                Esto fue una evidencia práctica de que una resistencia de un
+                orden aproximado a 8.6 kΩ podía recuperar el comportamiento
+                que había observado originalmente.
+            </p>
+
+            <h2>
+                El último experimento
+            </h2>
+
+            <p>
+                Después de recuperar temporalmente el funcionamiento de la
+                placa decidí realizar otra prueba. Quería mover la resistencia
+                de la posición C-D hacia C-F para comprobar si el cambio de
+                configuración producía algún efecto diferente durante el
+                arranque.
+            </p>
+
+            <p>
+                Esta vez no tuve tanta suerte.
+            </p>
+
+            <p>
+                Durante la manipulación levanté una pista de la placa.
+                Intenté obtener un nuevo punto de conexión utilizando hilo
+                de cobre sobre la parte restante de la pista, pero durante
+                el intento la pista volvió a romperse.
+            </p>
+
+            <p>
+                En ese momento decidí detener las modificaciones. La placa
+                había quedado inutilizable y continuar trabajando sobre ella
+                probablemente solo habría causado más daños.
+            </p>
+
+            <pre><code>
+            NO CODE
+            </code></pre>
+
+            <h2>
+                Resultado
+            </h2>
+
+            <p>
+                Aunque la placa terminó dañada antes de que pudiera llegar al
+                firmware, conseguí obtener bastante información durante el
+                proceso.
+            </p>
+
+            <p>
+                Entre otras cosas conseguí:
+            </p>
+
+            <ul>
+                <li>Localizar una UART funcional de 3.3 V.</li>
+                <li>Obtener un bootlog real del equipo.</li>
+                <li>Identificar U-Boot.</li>
+                <li>Identificar memoria NAND.</li>
+                <li>Identificar memoria DDR2 WINBOND.</li>
+                <li>
+                    Comprobar que Enter y Ctrl+C no proporcionaban una
+                    consola interactiva.
+                </li>
+                <li>
+                    Reconstruir parcialmente la red alrededor de R141.
+                </li>
+                <li>
+                    Recuperar temporalmente el funcionamiento utilizando
+                    aproximadamente 8.6 kΩ entre C y D.
+                </li>
+            </ul>
+
+            <p>
+                No pude confirmar documentalmente la función exacta de R141
+                ni la relación entre sus diferentes posiciones y los valores
+                CFG 04 y CFG 06. Tampoco conseguí entrar en U-Boot de forma
+                interactiva ni llegar al dump y análisis del firmware.
+            </p>
+
+            <h2>
+                Lo que aprendí
+            </h2>
+
+            <p>
+                Probablemente una de las cosas más importantes que me dejó
+                este experimento fue aprender que hacer ingeniería inversa
+                sobre hardware desconocido requiere mucha más paciencia que
+                simplemente soldar componentes y probar cosas.
+            </p>
+
+            <p>
+                Para el siguiente router quiero documentar la placa antes de
+                modificarla, guardar los componentes originales y medirlos
+                fuera de circuito antes de perderlos.
+            </p>
+
+            <p>
+                También aprendí la importancia de distinguir entre una
+                observación y una hipótesis. Que dos puntos tengan cierta
+                resistencia entre ellos no significa necesariamente que ya
+                conozcamos qué función cumplen dentro del circuito.
+            </p>
+
+            <p>
+                Otra cosa que definitivamente voy a hacer la próxima vez es
+                localizar puntos alternativos de una red antes de intentar
+                levantar un pad o modificar una pista.
+            </p>
+
+            <h2>
+                Próximo objetivo
+            </h2>
+
+            <p>
+                Después de esta experiencia quiero repetir el proceso con
+                otro router viejo, pero de una forma mucho más controlada.
+            </p>
+
+            <p>
+                La idea sería seguir un proceso parecido a:
+            </p>
+
+            <pre><code>
+PCB
+ ↓
+Alimentación
+ ↓
+Interfaces
+ ↓
+UART / JTAG
+ ↓
+Bootlog
+ ↓
+Memoria
+ ↓
+Dump de firmware
+ ↓
+Análisis del bootloader
+ ↓
+Modificación controlada
+ ↓
+Recuperación
+            </code></pre>
+
+            <p>
+                También fue durante este experimento cuando empezó a tomar
+                más forma una idea que posteriormente terminaría relacionada
+                con ARES-32: crear pequeñas herramientas portátiles de
+                diagnóstico y exploración que puedan ejecutarse directamente
+                desde un ESP32.
+            </p>
+
+            <h2>
+                Conclusión
+            </h2>
+
+            <p>
+                Al final la placa terminó dañada antes de que pudiera llegar
+                al firmware, pero no considero que el experimento haya sido
+                un fracaso.
+            </p>
+
+            <p>
+                Conseguí pasar de tener una PCB completamente desconocida a
+                identificar su UART, observar su proceso de arranque,
+                identificar componentes importantes y reconstruir parcialmente
+                una de sus redes de configuración.
+            </p>
+
+            <p>
+                Lo que más me gustó de este experimento fue precisamente esa
+                parte: tratar el hardware desconocido como un rompecabezas.
+                Cada medición podía convertirse en una hipótesis y cada
+                hipótesis en una nueva prueba.
+            </p>
+
+            <p>
+                Y sí, terminé destruyendo el router en el proceso jajaja,
+                pero al menos ahora sé mucho más sobre cómo abordar el
+                siguiente.
+            </p>
+
+        </article>
+
+    </main>
+
+</body>
+
+</html>
