@@ -22,12 +22,10 @@
 
     <header class="post-header">
 
-        <a href="index.html"
-           class="back-button">
+        <div class="logo-container">
+            <img src="icon.jpg" alt="Logo" class="logo">
+        </div>
 
-            ← Volver al Blog
-
-        </a>
 
     </header>
 
@@ -66,6 +64,10 @@ Al salir de clase pensé: ¿y si programo una herramienta que haga estos cálcul
             </p>
 
             <h2>
+                Objetivo
+            </h2>
+
+            <p>
                 El objetivo era crear un script capaz de recibir una dirección IP y la cantidad de subredes necesarias para posteriormente calcular:
 
 La máscara de subred.
@@ -76,9 +78,8 @@ Las direcciones utilizables.
 La dirección de broadcast.
 
 Antes de realizar cualquier cálculo, necesitaba definir correctamente los datos de entrada.
-            </h2>
 
-            <p>
+
                 Durante el primer día me concentré principalmente en el sistema de entrada de datos.
 
 Necesitaba obtener dos valores:
@@ -94,7 +95,11 @@ Inicialmente intenté almacenar la dirección IP directamente en un arreglo, per
             </p>
 
             <h2>
-                Una vez resuelta la entrada de datos, el siguiente paso fue calcular la máscara de subred.
+               Manejo del input
+            </h2>
+
+            <p>
+                 Una vez resuelta la entrada de datos, el siguiente paso fue calcular la máscara de subred.
 
 Para determinar cuántos bits debían agregarse al prefijo original utilicé el principio:
 
@@ -114,9 +119,8 @@ Clase B = /16
 Clase C = /24
 
 Una vez conocido el prefijo inicial, simplemente sumé los bits prestados obtenidos anteriormente para calcular el nuevo prefijo de red.
-            </h2>
 
-            <p>
+
                 Construcción de la Máscara
 
 Con el prefijo calculado, construí la máscara bit por bit.
@@ -151,7 +155,7 @@ Finalmente, la última dirección utilizable se obtuvo restando una unidad a la 
                 NO CODE
             </code></pre>
 
-            <h2>
+            <p>
                 Después de tres días de trabajo conseguí una herramienta funcional capaz de automatizar completamente los cálculos de subneteo.
 
 Aunque el proyecto surgió por una situación bastante simple en clase, terminó ayudándome a comprender mucho mejor conceptos como:
@@ -162,7 +166,7 @@ Máscaras de subred.
 Bits prestados.
 Direcciones de broadcast.
 Rangos de hosts utilizables.
-            </h2>
+            </p>
 
             <p>
                 Mirando atrás, el proyecto parece relativamente sencillo, pero durante el desarrollo encontré varios problemas que me obligaron a investigar y comprender mejor cómo funcionan realmente las redes IP.
