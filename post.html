@@ -82,8 +82,13 @@ Las direcciones utilizables.
 La dirección de broadcast.
 
 Antes de realizar cualquier cálculo, necesitaba definir correctamente los datos de entrada.
+            </p>
 
+            <h2>
+               Desarrollo
+            </h2>
 
+            <p>
                 Durante el primer día me concentré principalmente en el sistema de entrada de datos.
 
 Necesitaba obtener dos valores:
@@ -96,13 +101,8 @@ Al principio pensé en utilizar input_raw(), pero descubrí que esta función ya
 Esto generó un pequeño inconveniente: input() devuelve una cadena de texto, mientras que para realizar operaciones matemáticas necesitaba trabajar con números enteros. Para la cantidad de subredes el problema fue sencillo de resolver utilizando int(), pero con la dirección IP era diferente debido a que contiene puntos que separan los octetos.
 
 Inicialmente intenté almacenar la dirección IP directamente en un arreglo, pero la solución resultó poco práctica para los cálculos posteriores. Finalmente decidí solicitar cada octeto por separado, lo que simplificó considerablemente el procesamiento y me permitió acceder fácilmente al primer octeto para determinar la clase de la red.
-            </p>
 
-            <h2>
-               Manejo del input
-            </h2>
 
-            <p>
                  Una vez resuelta la entrada de datos, el siguiente paso fue calcular la máscara de subred.
 
 Para determinar cuántos bits debían agregarse al prefijo original utilicé el principio:
@@ -159,6 +159,8 @@ Finalmente, la última dirección utilizable se obtuvo restando una unidad a la 
                 NO CODE
             </code></pre>
 
+            <h2>Resultado</h2>
+
             <p>
                 Después de tres días de trabajo conseguí una herramienta funcional capaz de automatizar completamente los cálculos de subneteo.
 
@@ -171,6 +173,8 @@ Bits prestados.
 Direcciones de broadcast.
 Rangos de hosts utilizables.
             </p>
+
+            <h2>Conclusión</h2>
 
             <p>
                 Mirando atrás, el proyecto parece relativamente sencillo, pero durante el desarrollo encontré varios problemas que me obligaron a investigar y comprender mejor cómo funcionan realmente las redes IP.
