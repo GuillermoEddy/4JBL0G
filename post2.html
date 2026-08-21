@@ -1,27 +1,272 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
-        <link rel="shortcut icon" href="favicon.ico">
-        <!--Titulo del post (pestana)-->
-        <title>4JBL0G-KeyLogger</title>
-        <a href="./index.html">
-            <button class="icon"></button>
-        </a>
-        <!--Titulo del post-->
-        <h1>KeyLogger en python</h1>
-    </head>
-    <body>
-        <!--Separador-->
-        <h4>1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100</h4>
-        <!-- Texto del post-->
-        <p>Por ahi de los años 2020-2021 hice un KeyLogger es decir un programa que se instala en el equipo de la victima y le reporta cada tecla presionada al atacante, este programa en especifico te reporta las teclas al email</p>
-        <p>Este pequeño script fue algo que hice por pura diversion asi que no hay razon solo lo hice por que si, en escencia consta de una variable que almacena cada entrada de un listener del teclado, en otras palabras:</p>
-        <p>El script se mantiene en escucha por cada entrada del teclado, y esas entradas las guarda en una variable log, basicamente eso es un keylogger</p>
-        <p>Pero en este caso le agregue la funcionalidad de que te envia el log por email, y hoy que lo reactive ese fue el problema, actualmente ya no puedes usar las app passwords como antes, ahora ese menu en la cuenta de google esta mas escondido y necesitas tener la 2FA activada, estas app passwords te sirven para por ejemplo en este caso, loggearte en el servidor smtp de gmail para enviar correos desde tu email</p>
-        <p>Esto no tiene mas complicacion, es solo eso, un log que se envia por smtp al correo que eligas, y curiosamente windows defender no lo detecta como virus o amenaza jajajaja grande microsoft</p>
-        <!--PoC-->
-        <video class="center" controls>
-            <source src="Post2.mp4" type="video/mp4">
-        </video>
-    </body>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>4JBL0G - Keylogger en Python</title>
+
+    <link rel="stylesheet"
+          href="styles.css">
+
+    <link rel="shortcut icon"
+          href="favicon.ico">
+
+</head>
+
+<body>
+
+    <header class="post-header">
+
+        <div class="logo-container">
+
+            <a href="./index.html">
+                <img src="icon.jpg"
+                     alt="Logo"
+                     class="logo">
+            </a>
+
+            <div>
+                <h2>4JBL0G</h2>
+                <p class="tagline">
+                    Cybersecurity & Programming
+                </p>
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="post-container">
+
+        <article class="post">
+
+            <h1>
+                Keylogger en Python
+            </h1>
+
+            <div class="post-info">
+
+                <span>
+                    📅 21 de Enero del 2025
+                </span>
+
+                <span>
+                    🏷️ PROGRAMACIÓN
+                </span>
+
+                <span>
+                    🏷️ CIBERSEGURIDAD
+                </span>
+
+            </div>
+
+            <p class="binary">
+                1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100
+            </p>
+
+            <img src="KeyLogger.png"
+                 class="cover-image"
+                 alt="Keylogger en Python">
+
+            <p>
+                Por ahí de los años 2020-2021 desarrollé un pequeño
+                KeyLogger, es decir, un programa capaz de registrar las
+                teclas presionadas en un equipo y enviarlas posteriormente
+                a un atacante. En este caso específico, el programa estaba
+                diseñado para reportar toda la actividad del teclado
+                mediante correo electrónico.
+            </p>
+
+            <p>
+                La realidad es que este proyecto no nació por una necesidad
+                en particular ni formaba parte de alguna investigación seria.
+                Simplemente lo hice por diversión y como una forma de
+                aprender más sobre Python, automatización y algunos
+                conceptos relacionados con la ciberseguridad.
+            </p>
+
+            <p>
+                Hace poco decidí volver a ejecutarlo para ver si seguía
+                funcionando y me encontré con algunos cambios interesantes
+                que hicieron que tuviera que modificar parte de la
+                configuración.
+            </p>
+
+            <h2>
+                Objetivo
+            </h2>
+
+            <p>
+                El objetivo de este proyecto era crear una prueba de
+                concepto sencilla que permitiera:
+            </p>
+
+            <ul>
+                <li>Capturar las pulsaciones del teclado.</li>
+                <li>Almacenar temporalmente la información registrada.</li>
+                <li>Enviar periódicamente los registros por correo electrónico.</li>
+                <li>
+                    Comprender mejor cómo funcionan los eventos del teclado
+                    y el protocolo SMTP.
+                </li>
+            </ul>
+
+            <p>
+                Más allá de su funcionalidad, el proyecto fue una excelente
+                oportunidad para aprender cómo interactuar con servicios
+                externos desde Python.
+            </p>
+
+            <h2>
+                Desarrollo
+            </h2>
+
+            <p>
+                El funcionamiento general del programa es bastante simple.
+            </p>
+
+            <p>
+                El script permanece constantemente en ejecución escuchando
+                todos los eventos generados por el teclado. Cada vez que el
+                usuario presiona una tecla, esta es capturada por un listener
+                y almacenada dentro de una variable que actúa como registro
+                o log.
+            </p>
+
+            <p>
+                En otras palabras, el programa se mantiene monitoreando las
+                entradas del teclado y guarda cada una de ellas para
+                posteriormente procesarlas o enviarlas. Esa es, en esencia,
+                la función principal de cualquier keylogger.
+            </p>
+
+            <p>
+                Lo interesante de este proyecto fue añadir la capacidad de
+                enviar automáticamente el contenido del log mediante correo
+                electrónico.
+            </p>
+
+            <p>
+                Para lograrlo utilicé SMTP, el protocolo utilizado para el
+                envío de correos electrónicos. El programa iniciaba sesión
+                en una cuenta de Gmail y posteriormente enviaba el contenido
+                registrado a una dirección de correo previamente configurada.
+            </p>
+
+            <p>
+                Sin embargo, al volver a probar el proyecto varios años
+                después, apareció un inconveniente que no existía cuando lo
+                desarrollé originalmente.
+            </p>
+
+            <p>
+                Google ha realizado varios cambios en sus políticas de
+                seguridad y actualmente el uso de contraseñas de aplicaciones
+                ya no es tan directo como antes. Ahora es necesario habilitar
+                la autenticación en dos factores (2FA) y navegar por opciones
+                menos visibles dentro de la configuración de la cuenta para
+                generar una contraseña específica para aplicaciones.
+            </p>
+
+            <p>
+                Estas contraseñas permiten que programas externos puedan
+                autenticarse en servicios como SMTP sin necesidad de utilizar
+                directamente la contraseña principal de la cuenta.
+            </p>
+
+            <p>
+                Una vez resuelto ese detalle, el resto del proyecto continuó
+                funcionando prácticamente igual que cuando lo desarrollé
+                por primera vez.
+            </p>
+
+            <pre><code>
+                NO CODE
+            </code></pre>
+
+            <h2>
+                Resultado
+            </h2>
+
+            <p>
+                El resultado fue un keylogger completamente funcional capaz
+                de:
+            </p>
+
+            <ul>
+                <li>Registrar las pulsaciones del teclado.</li>
+                <li>Almacenar temporalmente la información capturada.</li>
+                <li>
+                    Enviar automáticamente los registros mediante correo
+                    electrónico utilizando SMTP.
+                </li>
+            </ul>
+
+            <p>
+                Lo que más me sorprendió al volver a probarlo fue que
+                Windows Defender no lo identificó como una amenaza ni lo
+                bloqueó automáticamente durante mis pruebas.
+            </p>
+
+            <p>
+                Aunque el proyecto es bastante sencillo comparado con
+                herramientas más avanzadas, cumplió perfectamente su
+                propósito como ejercicio práctico para aprender sobre
+                captura de eventos, automatización y comunicación mediante
+                correo electrónico.
+            </p>
+
+            <h2>
+                Conclusión
+            </h2>
+
+            <p>
+                Este fue uno de esos proyectos que nacen simplemente por
+                curiosidad.
+            </p>
+
+            <p>
+                No fue especialmente complejo ni requirió algoritmos
+                avanzados, pero me permitió comprender mejor cómo funcionan
+                los listeners de teclado, el envío de correos mediante SMTP
+                y algunos mecanismos básicos utilizados por determinadas
+                herramientas de monitoreo.
+            </p>
+
+            <p>
+                Además, volver a ejecutarlo varios años después me permitió
+                observar cómo han cambiado las medidas de seguridad de
+                servicios como Gmail y cómo pequeños cambios en la
+                infraestructura de terceros pueden afectar proyectos que
+                anteriormente funcionaban sin problemas.
+            </p>
+
+            <p>
+                A día de hoy sigue siendo un proyecto sencillo, pero fue una
+                experiencia divertida y una buena oportunidad para
+                experimentar con Python y conceptos relacionados con la
+                ciberseguridad.
+            </p>
+
+            <video controls
+                   class="post-video">
+
+                <source src="Post2.mp4"
+                        type="video/mp4">
+
+                Tu navegador no soporta la reproducción de video.
+
+            </video>
+
+        </article>
+
+    </main>
+
+</body>
+
 </html>
