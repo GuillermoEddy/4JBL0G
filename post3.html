@@ -1,25 +1,194 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
-        <link rel="shortcut icon" href="favicon.ico">
-        <!--Titulo del post (pestana)-->
-        <title>4JBL0G-Saltar contraseña de Windows</title>
-        <a href="./index.html">
-            <button class="icon"></button>
-        </a>
-        <!--Titulo del post-->
-        <h1>Saltar contraseña de Windows</h1>
-    </head>
-    <body>
-        <!--Separador-->
-        <h4>1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100</h4>
-        <!-- Texto del post-->
-        <p>En este post me gustaria contarles que hace poco vi en algun lado que no recuerdo, como alguien saltaba la contraseña de una maquina windows, asi que me puse a investigar y esto fue lo que encontre:</p>
-        <p>La particion de recuperacion del disco te permite abrir un cmd desde el que tienes acceso a todas las unidades incluyendo a la unidad C: esto significa que puedes editar archivos desde ahi o como minimo mover y copiar archivos entre otras cosas.</p>
-        <p>La explotacion consiste en que en la pantalla de inicio de sesion de windows en la parte inferior derecha hay 3 simbolos, entre ellos el de apagar y el de accesibilidad, para empezar la explotacion primero hay que dar click en el boton de apagar y luego en reiniciar mientras pulsas shift cuando vuelva a encender la maquina iniciara en la particion de recuperacion de Windows el siguiente paso es ir a Opciones Avanzadas > Simbolo del sistema, esto te abrira el cmd donde escribiras: copy utilman.exe utilmanbk.exe esto copiara el ejecutable de accesibilidad a un archivo que nos servira como copia de seguridad de accesibilidad</p>
-        <p>Despues hay que escribir: copy cmd.exe utilman.exe esto hara que el contenido de cmd.exe que sirve para abrir un simbolo del sistema se copie a el archivo utilman.exe que es el que se ejecuta cuando damos click en el icono de accesibilidad despues de esto cerramos y reiniciamos</p>
-        <p>"Al volver a iniciar daremos click en el icono de accesibilidad y se abrira un cmd donde primero listaremos los usuarios con el comando: net user y ahi buscaremos el usuario administrador, luego le cambiaremos la contraseña con: net user [Nombre del usuario] [Nueva contraseña] y ahora podras usar esa contraseña para iniciar sesion como administrador"</p>
-        <!--PoC-->
-        <h1>No tengo grabadora asi que no puedo hacerles una PoC</h1>
-    </body>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>4JBL0G - Saltar Contraseña de Windows</title>
+
+    <link rel="stylesheet"
+          href="styles.css">
+
+    <link rel="shortcut icon"
+          href="favicon.ico">
+
+</head>
+
+<body>
+
+    <header class="post-header">
+
+        <div class="logo-container">
+
+            <a href="./index.html">
+                <img src="icon.jpg"
+                     alt="Logo"
+                     class="logo">
+            </a>
+
+            <div>
+                <h2>4JBL0G</h2>
+                <p class="tagline">
+                    Cybersecurity & Programming
+                </p>
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="post-container">
+
+        <article class="post">
+
+            <h1>
+                Saltar Contraseña de Windows
+            </h1>
+
+            <div class="post-info">
+
+                <span>
+                    📅 22 de Enero del 2025
+                </span>
+
+                <span>
+                    🏷️ CIBERSEGURIDAD
+                </span>
+
+            </div>
+
+            <p class="binary">
+                1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100
+            </p>
+
+            <p>
+                En este post me gustaría contarles que hace poco vi en algún
+                lado, aunque no recuerdo exactamente dónde, cómo alguien
+                conseguía saltarse la contraseña de una máquina Windows.
+                Así que me puse a investigar para entender cómo funcionaba
+                y esto fue lo que encontré.
+            </p>
+
+            <h2>
+                El Problema
+            </h2>
+
+            <p>
+                La partición de recuperación del disco permite abrir un
+                símbolo del sistema desde el entorno de recuperación de
+                Windows. Desde ahí se tiene acceso a las unidades del
+                sistema, incluyendo la unidad C:, lo que permite realizar
+                diferentes operaciones sobre los archivos.
+            </p>
+
+            <p>
+                Esto significa que, dependiendo de la configuración del
+                equipo y de las protecciones habilitadas, desde este entorno
+                es posible acceder, copiar o modificar determinados archivos
+                del sistema.
+            </p>
+
+            <h2>
+                Desarrollo
+            </h2>
+
+            <p>
+                La técnica que encontré aprovecha precisamente esta
+                característica del entorno de recuperación y la relación
+                entre el ejecutable de accesibilidad de Windows y el
+                símbolo del sistema.
+            </p>
+
+            <p>
+                En la pantalla de inicio de sesión de Windows existen varios
+                botones en la parte inferior derecha, entre ellos el botón
+                de apagado y el de accesibilidad.
+            </p>
+
+            <p>
+                El proceso comienza entrando al entorno de recuperación de
+                Windows mediante las opciones avanzadas de reinicio.
+            </p>
+
+            <p>
+                Una vez dentro del entorno de recuperación, es posible abrir
+                un símbolo del sistema. Desde este punto se pueden realizar
+                operaciones sobre los archivos del sistema.
+            </p>
+
+            <p>
+                La idea principal de la técnica consiste en reemplazar
+                temporalmente el ejecutable asociado a las opciones de
+                accesibilidad por el ejecutable del símbolo del sistema.
+            </p>
+
+            <p>
+                De esta manera, al utilizar posteriormente la opción de
+                accesibilidad desde la pantalla de inicio de sesión, en
+                determinadas versiones y configuraciones de Windows puede
+                terminar ejecutándose un símbolo del sistema en lugar de la
+                herramienta original.
+            </p>
+
+            <p>
+                Finalmente, desde ese entorno se pueden administrar las
+                cuentas locales del sistema. Una vez terminada la prueba,
+                es importante restaurar los archivos originales para no
+                dejar el sistema modificado.
+            </p>
+
+            <pre><code>
+            NO CODE
+            </code></pre>
+
+            <h2>
+                Resultado
+            </h2>
+
+            <p>
+                El resultado de la investigación fue descubrir que una
+                característica diseñada para facilitar el acceso a
+                herramientas de recuperación y accesibilidad también podía
+                convertirse en un problema de seguridad cuando un atacante
+                tenía acceso físico al equipo y el entorno de recuperación
+                no estaba correctamente protegido.
+            </p>
+
+            <p>
+                Lo más interesante para mí fue comprobar que el problema no
+                dependía de conocer la contraseña original, sino de conseguir
+                acceso al entorno de recuperación y aprovechar los permisos
+                disponibles desde ahí.
+            </p>
+
+            <h2>
+                Conclusión
+            </h2>
+
+            <p>
+                Este experimento me ayudó a entender que la seguridad de un
+                equipo no depende únicamente de tener una contraseña fuerte.
+                Si alguien consigue acceso físico al dispositivo y existen
+                mecanismos de recuperación sin las protecciones adecuadas,
+                pueden aparecer otras formas de comprometer el sistema.
+            </p>
+
+            <p>
+                También fue una buena introducción a la importancia de
+                proteger el acceso físico, configurar correctamente las
+                opciones de recuperación y utilizar mecanismos como el
+                cifrado de disco para evitar que los archivos del sistema
+                puedan manipularse fácilmente desde un entorno externo.
+            </p>
+
+        </article>
+
+    </main>
+
+</body>
+
 </html>
