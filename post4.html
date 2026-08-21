@@ -1,31 +1,279 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
-        <link rel="shortcut icon" href="favicon.ico">
-        <!--Titulo del post (pestana)-->
-        <title>4JBL0G-</title>
-        <a href="./index.html">
-            <button class="icon"></button>
-        </a>
-        <!--Titulo del post-->
-        <h1>ARES-32 Advanced Reconnaissance and Explotation System</h1>
-    </head>
-    <body>
-        <!--Separador-->
-        <h4>1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100</h4>
-        <!-- Texto del post-->
-        <p>Hola, en este post quiero hablarles sobre ARES-32, ARES-32 es un dispositivo inspirado en dispositivos como el Flipper Zero y Bruce
-            la idea es que puedas hacer reconocimiento basico y algunos ataques desde un dispositivo que cabe en la palma de tu mano y que no cuesta mas de
-            300 o 400 pesos mexicanos, este es un proyecto que llevo planeando desde hace unos años cuando salio el Flipper Zero, actualmente el proyecto aun se encuentra en desarrollo
-            durante el cual he aprendido muchas cosas de las que hablare en posteriores posts, el proyecto tiene el objetivo de ser modular, es decir que despues puedas agregar
-            cosas como RF o NFC sin tener que reescribir todo el codigo, es por eso que decidi crear un "sistema operativo" y sobre el hacer las aplicaciones, hasta el momento el
-            sistema cuenta con un sistema de UI, un sistema que se encarga de manejar los pines GPIO y uno que se encarga de manejar el WIFI, en cuanto a aplicaciones, hasta el momento
-            tiene un Monitor GPIO para poder saber de que pin vienen las señales y un Escaner de redes WIFI que te muestra las redes del entorno, posteriormente quiero agregar un modulo para hacer
-            ataques de Evil Twin, Ataques simulando dispositivos HID, Deauther, y quiero empezar a probar cosas con Bluetooth.
-        </p>
-        <!--PoC-->
-        <video class="center" controls>
-            <source src="post4.mp4" type="video/mp4">
-        </video>
-    </body>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>4JBL0G - ARES-32</title>
+
+    <link rel="stylesheet"
+          href="styles.css">
+
+    <link rel="shortcut icon"
+          href="favicon.ico">
+
+</head>
+
+<body>
+
+    <header class="post-header">
+
+        <div class="logo-container">
+
+            <a href="./index.html">
+                <img src="icon.jpg"
+                     alt="Logo"
+                     class="logo">
+            </a>
+
+            <div>
+                <h2>4JBL0G</h2>
+                <p class="tagline">
+                    Cybersecurity & Programming
+                </p>
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="post-container">
+
+        <article class="post">
+
+            <h1>
+                ARES-32
+            </h1>
+
+            <div class="post-info">
+
+                <span>
+                    📅 16 de Agosto del 2026
+                </span>
+
+                <span>
+                    🏷️ PROGRAMACIÓN
+                </span>
+
+                <span>
+                    🏷️ CIBERSEGURIDAD
+                </span>
+
+            </div>
+
+            <p class="binary">
+                1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100
+            </p>
+
+            <p>
+                Hola, en este post quiero hablarles sobre uno de los proyectos
+                más grandes que estoy desarrollando actualmente: <strong>ARES-32</strong>.
+            </p>
+
+            <p>
+                ARES-32 es un dispositivo inspirado en proyectos como el
+                Flipper Zero y Bruce. La idea principal es tener una
+                herramienta de reconocimiento y experimentación en
+                ciberseguridad que pueda llevar en la palma de mi mano y que,
+                a diferencia de otros dispositivos similares, pueda construirse
+                por unos <strong>300 o 400 pesos mexicanos</strong>.
+            </p>
+
+            <p>
+                Este proyecto llevaba varios años rondando por mi cabeza.
+                Cuando salió el Flipper Zero me llamó mucho la atención la
+                idea de tener una herramienta portátil capaz de hacer
+                diferentes tareas relacionadas con hardware y seguridad, pero
+                también quería intentar construir algo propio desde cero.
+            </p>
+
+            <h2>
+                Objetivo
+            </h2>
+
+            <p>
+                El objetivo de ARES-32 no es simplemente hacer un dispositivo
+                que tenga muchas herramientas, sino crear una plataforma
+                modular sobre la que pueda seguir experimentando y agregando
+                nuevas funciones con el tiempo.
+            </p>
+
+            <p>
+                Una de las cosas que más me interesan del proyecto es que
+                posteriormente pueda agregar módulos como RF, NFC, Bluetooth
+                u otro hardware sin tener que reescribir todo el código del
+                dispositivo.
+            </p>
+
+            <p>
+                Por eso decidí separar el proyecto en diferentes componentes
+                y crear una especie de "sistema operativo" propio. Sobre este
+                sistema puedo desarrollar las diferentes aplicaciones de
+                ARES-32 sin que cada una tenga que encargarse directamente
+                de controlar todo el hardware.
+            </p>
+
+            <h2>
+                Desarrollo
+            </h2>
+
+            <p>
+                Actualmente ARES-32 está construido alrededor de un ESP32 y
+                cuenta con una pantalla ST7789 de 135x240 píxeles. Una de las
+                primeras cosas que tuve que hacer fue conseguir que la pantalla
+                funcionara correctamente, incluyendo la comunicación SPI,
+                el manejo de colores, el renderizado de texto y posteriormente
+                algunos elementos de la interfaz.
+            </p>
+
+            <p>
+                Para mantener el proyecto organizado decidí crear diferentes
+                capas. Por un lado está el hardware de bajo nivel y por otro
+                los sistemas que utilizan las aplicaciones. De esta manera,
+                una aplicación no necesita saber exactamente cómo funciona
+                cada componente para poder utilizarlo.
+            </p>
+
+            <p>
+                Hasta ahora el sistema cuenta con una interfaz de usuario
+                basada principalmente en texto, un sistema encargado de
+                manejar los pines GPIO y otro encargado de controlar las
+                funciones relacionadas con WiFi.
+            </p>
+
+            <p>
+                También tuve que crear diferentes funciones propias para
+                manejar la pantalla, como dibujar píxeles, rellenar la
+                pantalla, mostrar texto y posteriormente mostrar gráficos.
+                Todo esto fue parte de la etapa inicial de construcción del
+                sistema.
+            </p>
+
+            <h2>
+                Aplicaciones
+            </h2>
+
+            <p>
+                Sobre este sistema es donde empiezan a aparecer las
+                aplicaciones de ARES-32.
+            </p>
+
+            <p>
+                Actualmente ya tengo funcionando un <strong>Monitor GPIO</strong>,
+                que permite observar las señales que llegan a determinados
+                pines del dispositivo, y un <strong>Escáner de redes WiFi</strong>
+                que permite detectar las redes disponibles alrededor del
+                dispositivo y mostrar información como su nombre y canal.
+            </p>
+
+            <p>
+                Estas aplicaciones son todavía bastante básicas, pero son
+                importantes porque me están permitiendo construir poco a poco
+                la base sobre la que funcionarán las herramientas futuras.
+            </p>
+
+            <h2>
+                Lo que sigue
+            </h2>
+
+            <p>
+                Todavía queda muchísimo por hacer. Algunas de las cosas que
+                quiero experimentar posteriormente son funciones relacionadas
+                con Evil Twin, emulación de dispositivos HID, herramientas
+                de desautenticación de redes y comenzar a experimentar más
+                seriamente con Bluetooth.
+            </p>
+
+            <p>
+                También quiero que el hardware sea modular para poder agregar
+                posteriormente funciones relacionadas con RF, NFC y otros
+                protocolos sin tener que cambiar completamente la arquitectura
+                del proyecto.
+            </p>
+
+            <p>
+                La idea es que ARES-32 termine siendo algo más que un conjunto
+                de herramientas independientes. Quiero que exista una
+                plataforma común donde cada nueva función pueda convertirse
+                simplemente en otra aplicación dentro del sistema.
+            </p>
+
+            <pre><code>
+            NO CODE
+            </code></pre>
+
+            <h2>
+                Resultado
+            </h2>
+
+            <p>
+                Actualmente ARES-32 todavía se encuentra en desarrollo, pero
+                ya cuenta con una base funcional sobre la que puedo seguir
+                construyendo.
+            </p>
+
+            <p>
+                Hasta ahora he conseguido poner en funcionamiento la pantalla,
+                desarrollar la interfaz, manejar GPIO, implementar las primeras
+                funciones de WiFi y crear las primeras aplicaciones del sistema.
+            </p>
+
+            <p>
+                Puede parecer poco comparado con todo lo que quiero que haga
+                eventualmente, pero llegar hasta este punto me ha enseñado
+                muchísimo sobre ESP32, ESP-IDF, comunicación SPI, pantallas,
+                interfaces, arquitectura de software y desarrollo de sistemas
+                embebidos.
+            </p>
+
+            <h2>
+                Conclusión
+            </h2>
+
+            <p>
+                ARES-32 probablemente sea uno de los proyectos más ambiciosos
+                que he hecho hasta ahora. Lo interesante es que no estoy
+                siguiendo simplemente un tutorial para construirlo, sino que
+                prácticamente cada parte del sistema me está obligando a
+                investigar, probar cosas y solucionar problemas por mi cuenta.
+            </p>
+
+            <p>
+                Todavía no sé exactamente hasta dónde voy a llevar el proyecto,
+                pero precisamente eso es lo que me gusta. Cada vez que termino
+                una parte aparece otra cosa que quiero agregar.
+            </p>
+
+            <p>
+                Este post es solamente una introducción al proyecto. En los
+                siguientes posts quiero contar con más detalle cómo fui
+                construyendo cada parte de ARES-32, desde el funcionamiento de
+                la pantalla y la arquitectura del código hasta las diferentes
+                herramientas que vaya desarrollando.
+            </p>
+
+            <p>
+                Por ahora, esto es ARES-32.
+            </p>
+
+            <video controls
+                   class="post-video">
+
+                <source src="post4.mp4"
+                        type="video/mp4">
+
+                Tu navegador no soporta la reproducción de video.
+
+            </video>
+
+        </article>
+
+    </main>
+
+</body>
+
 </html>
