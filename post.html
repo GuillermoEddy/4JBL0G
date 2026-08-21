@@ -1,27 +1,189 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
-        <link rel="shortcut icon" href="favicon.ico">
-        <title>4JBL0G-Herramienta para calcular subredes</title>
-        <a href="./index.html">
-            <button class="icon"></button>
-        </a>
-        <h1>Herramienta para calcular subredes</h1>
-    </head>
-    <body>
-        <h4>1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100</h4>
+<!DOCTYPE html>
+<html lang="es">
 
-        <p>Hace unos dias llegue tarde a la clase de redes, y para que salvara mi falta tenia que calcular unas subredes en el pizarron, pero por el poco tiempo que quedaba de clase no pude terminar y me equivoque muchas veces, por lo que pense "y si hago un script que automatice esto?" y eso fue lo que hice</p>
-        <p>Pase 3 dias programando este script pero logre terminarlo y me gustaria contarles el proceso que fue programar esto:</p>
-        <p>El primer dia me concentre en manejar la entrada, "que datos necesitaba?" principalmente la ip de la red a subnettear y la cantidad de subredes que necesitaba, pero tuve un problemita, la funcion input_raw() ya no funciona en python 3.10 asi que tuve que usar input() pero esta funcion guarda la entrada en una variable tipo string y yo necesitaba el input en tipo int yo se que existe la funcion int() que transforma la variable que le pases en un integer pero una ip lleva puntos</p>
-        <p>Primero intente hacer un array con el input pero solo guardaba cada digito por separado y para hacer el salto de subred iba a ser un problema, ademas para determinar la clase de la red necesitaba el primer octeto de la ip asi que opte por no complicarme y pedir cada uno de los octetos por separado, para la cantidad de subredes simplemente del input lo transforme a integer con int() y listo y con eso tenia todos los datos de entrada que necesitaba</p>
-        <p>Despues me concentre en sacar la mascara de subred en base a la cantidad de subredes, primero sacar la cantidad de bits para la red, sabemos que para saber cuantos bits hay que agregar usamos la formula 2^n = s donde n es la cantidad de bits a encender y s es un numero mayor o igual a la cantidad de subredes que se necesitan, entonces, para saber cuantos bits estaban encendidos hice esto:</p>
-        <p>primero determine el prefijo en base a la clase de la red comparando el primer octeto con un limite y de esa manera sabemos si es clase a,b o c y tambien sabemos que es un prefijo de \8 \16 o \24 y a estos prefijos solo le sumamos n y listo esa es la cantidad de bits encendidos, luego itere de 0 hasta la cantidad de bits encendidos y por cada iteracion agregar a un array un 1 y despues resto 32 - la cantidad de bits encendidos y tengo los bits del host, hago la misma iteracion pero esta vez agregando 0's y en cada 8 objetos en el array agrego un punto</p>
-        <p>Luego simplemente por cada octeto comprobe que bits estaban encendidos y fui sumandolos y de esa manera obtuve la mascara de subred en decimal y en bits</p>
-        <p>Lo siguiente fue hacer los saltos, que fue facil ya que es solo sumar 1 para la primera ip utilizable y restar 2 direcciones desde la siguiente subred para la ultima y restar 1 para el broadcas y de esa manera lo termine</p>
-        <p>Esto me ayudo mucho a comprender el funcionamiento de como dividir redes y aunque aqui lo cuento como si fuera facil, la verdad si me tomo un poco de tiempo pero fue divertido, ahora no se que proyecto hacer, por eso empece este blog</p>
-        <video class="center" controls>
-            <source src="video.mp4" type="video/mp4">
-        </video>
-    </body>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>4JBL0G - Herramienta de Subnetting</title>
+
+    <link rel="stylesheet"
+          href="styles.css">
+
+    <link rel="shortcut icon"
+          href="favicon.ico">
+
+</head>
+
+<body>
+
+    <header class="post-header">
+
+        <a href="index.html"
+           class="back-button">
+
+            ← Volver al Blog
+
+        </a>
+
+    </header>
+
+    <main class="post-container">
+
+        <article class="post">
+
+            <h1>
+                Herramienta de Subnetting
+            </h1>
+
+            <div class="post-info">
+
+                <span>
+                    📅 Septiembre/2024
+                </span>
+
+                <span>
+                    🏷️ REDES
+                </span>
+
+            </div>
+
+            <p class="binary">
+                1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100
+            </p>
+
+            <img src="Redes.png"
+                 class="cover-image"
+                 alt="Portada">
+
+            <p>
+                Hace algunos días llegué tarde a mi clase de redes. Para justificar mi falta, el profesor me pidió resolver varios ejercicios de subneteo en el pizarrón. Debido al poco tiempo que quedaba de clase y a algunos errores en mis cálculos, no logré terminarlos correctamente.
+
+Al salir de clase pensé: ¿y si programo una herramienta que haga estos cálculos automáticamente?. Lo que comenzó como una simple idea terminó convirtiéndose en un proyecto que me tomó aproximadamente tres días de desarrollo y que, además, me ayudó a comprender mucho mejor cómo funciona el subneteo.
+            </p>
+
+            <h2>
+                El objetivo era crear un script capaz de recibir una dirección IP y la cantidad de subredes necesarias para posteriormente calcular:
+
+La máscara de subred.
+El prefijo CIDR.
+Los saltos de red.
+Las direcciones de red.
+Las direcciones utilizables.
+La dirección de broadcast.
+
+Antes de realizar cualquier cálculo, necesitaba definir correctamente los datos de entrada.
+            </h2>
+
+            <p>
+                Durante el primer día me concentré principalmente en el sistema de entrada de datos.
+
+Necesitaba obtener dos valores:
+
+La dirección IP a subnetear.
+La cantidad de subredes requeridas.
+
+Al principio pensé en utilizar input_raw(), pero descubrí que esta función ya no está disponible en Python 3.10, por lo que tuve que utilizar input().
+
+Esto generó un pequeño inconveniente: input() devuelve una cadena de texto, mientras que para realizar operaciones matemáticas necesitaba trabajar con números enteros. Para la cantidad de subredes el problema fue sencillo de resolver utilizando int(), pero con la dirección IP era diferente debido a que contiene puntos que separan los octetos.
+
+Inicialmente intenté almacenar la dirección IP directamente en un arreglo, pero la solución resultó poco práctica para los cálculos posteriores. Finalmente decidí solicitar cada octeto por separado, lo que simplificó considerablemente el procesamiento y me permitió acceder fácilmente al primer octeto para determinar la clase de la red.
+            </p>
+
+            <h2>
+                Una vez resuelta la entrada de datos, el siguiente paso fue calcular la máscara de subred.
+
+Para determinar cuántos bits debían agregarse al prefijo original utilicé el principio:
+
+2^n >= cantidad_de_subredes
+
+Donde:
+
+n representa la cantidad de bits prestados.
+El resultado debe ser mayor o igual al número de subredes necesarias.
+
+Posteriormente determiné la clase de la dirección IP utilizando el primer octeto.
+
+Dependiendo de la clase obtenía un prefijo base:
+
+Clase A = /8
+Clase B = /16
+Clase C = /24
+
+Una vez conocido el prefijo inicial, simplemente sumé los bits prestados obtenidos anteriormente para calcular el nuevo prefijo de red.
+            </h2>
+
+            <p>
+                Construcción de la Máscara
+
+Con el prefijo calculado, construí la máscara bit por bit.
+
+Primero generé una secuencia de unos (1) equivalente a la cantidad de bits de red. Después completé el resto de los 32 bits con ceros (0) para representar la parte correspondiente a los hosts.
+
+Posteriormente dividí estos bits en grupos de ocho para formar cada octeto de la máscara.
+
+Finalmente recorrí cada octeto y calculé su valor decimal sumando las potencias de dos correspondientes a los bits encendidos.
+
+De esta manera obtuve tanto la máscara en binario como su representación decimal.
+
+Cálculo de los Saltos
+
+Con la máscara ya calculada, el resto del proceso fue mucho más sencillo.
+
+A partir del tamaño del bloque pude determinar los saltos entre subredes y generar automáticamente:
+
+Dirección de red.
+Primera dirección utilizable.
+Última dirección utilizable.
+Dirección de broadcast.
+
+Para obtener la primera dirección utilizable simplemente sumé uno a la dirección de red.
+
+Para calcular la dirección de broadcast utilicé la dirección anterior a la siguiente subred.
+
+Finalmente, la última dirección utilizable se obtuvo restando una unidad a la dirección de broadcast.
+            </p>
+
+            <pre><code>
+                NO CODE
+            </code></pre>
+
+            <h2>
+                Después de tres días de trabajo conseguí una herramienta funcional capaz de automatizar completamente los cálculos de subneteo.
+
+Aunque el proyecto surgió por una situación bastante simple en clase, terminó ayudándome a comprender mucho mejor conceptos como:
+
+Clases de red.
+Prefijos CIDR.
+Máscaras de subred.
+Bits prestados.
+Direcciones de broadcast.
+Rangos de hosts utilizables.
+            </h2>
+
+            <p>
+                Mirando atrás, el proyecto parece relativamente sencillo, pero durante el desarrollo encontré varios problemas que me obligaron a investigar y comprender mejor cómo funcionan realmente las redes IP.
+
+Además de obtener una herramienta útil para futuras prácticas, terminé aprendiendo mucho más de lo que habría aprendido resolviendo ejercicios de forma manual.
+
+Y quizá lo más importante: este proyecto fue una de las razones por las que decidí comenzar este blog, con la intención de documentar futuros experimentos, proyectos y aprendizajes relacionados con programación, redes y ciberseguridad.
+            </p>
+
+            <video controls
+                   class="post-video">
+
+                <source src="video.mp4"
+                        type="video/mp4">
+
+            </video>
+
+        </article>
+
+    </main>
+
+</body>
+
 </html>

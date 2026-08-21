@@ -1,23 +1,123 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
-        <link rel="shortcut icon" href="favicon.ico">
-        <!--Titulo del post (pestana)-->
-        <title>4JBL0G-</title>
-        <a href="./index.html">
-            <button class="icon"></button>
+# post_template.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>4JBL0G - TITULO DEL POST</title>
+
+    <link rel="stylesheet"
+          href="styles.css">
+
+    <link rel="shortcut icon"
+          href="favicon.ico">
+
+</head>
+
+<body>
+
+    <header class="post-header">
+
+        <a href="index.html"
+           class="back-button">
+
+            ← Volver al Blog
+
         </a>
-        <!--Titulo del post-->
-        <h1>Lorem ipsum dolor</h1>
-    </head>
-    <body>
-        <!--Separador-->
-        <h4>1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100</h4>
-        <!-- Texto del post-->
-        <p>Lorem ipsum dolor sit amet consectetur</p>
-        <!--PoC-->
-        <video class="center" controls>
-            <source src="" type="video/mp4">
-        </video>
-    </body>
+
+    </header>
+
+    <main class="post-container">
+
+        <article class="post">
+
+            <h1>
+                TITULO DEL POST
+            </h1>
+
+            <div class="post-info">
+
+                <span>
+                    📅 FECHA
+                </span>
+
+                <span>
+                    🏷️ CATEGORIA
+                </span>
+
+            </div>
+
+            <p class="binary">
+                1010101010101010010101011101010101011010101010101001010101010010010101010101011110101010101011001010110100101010101010010100
+            </p>
+
+            <img src="PORTADA.png"
+                 class="cover-image"
+                 alt="Portada">
+
+            <p>
+                INTRODUCCION DEL POST
+            </p>
+
+            <h2>
+                El Problema
+            </h2>
+
+            <p>
+                Explica qué intentabas hacer.
+            </p>
+
+            <h2>
+                Desarrollo
+            </h2>
+
+            <p>
+                Cuenta el proceso completo.
+            </p>
+
+            <pre><code>
+codigo de ejemplo
+            </code></pre>
+
+            <h2>
+                Resultado
+            </h2>
+
+            <p>
+                Qué obtuviste al final.
+            </p>
+
+            <img src="resultado.png"
+                 class="content-image">
+
+            <video controls
+                   class="post-video">
+
+                <source src="video.mp4"
+                        type="video/mp4">
+
+            </video>
+
+            <h2>
+                Conclusión
+            </h2>
+
+            <p>
+                Qué aprendiste.
+            </p>
+
+        </article>
+
+    </main>
+
+</body>
+
 </html>
+```
